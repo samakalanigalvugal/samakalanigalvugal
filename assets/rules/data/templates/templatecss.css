@@ -1,0 +1,38 @@
+.main{
+    width: 100%;
+    padding: 0 20px;
+}
+.tophead{
+    text-align: center!important;
+    font-size: 24px!important;
+    font-family: "Segoe UI",Arial,sans-serif;
+    font-weight: 400;
+    margin: 10px 0;
+}
+.contentbodytitle{
+    /*margin-left: 6em;*/
+    padding-top: .2em;
+    display: block;
+}
+.bodytitlecontent{
+    margin-left: 2em;
+}
+.signature{
+    text-align: right;
+    margin-left: 6em;
+}
+table{
+    width: 50%;
+}
+.bodycontent{
+    margin-left: 8em;
+}
+.subject{
+    margin-left: 2em;
+}
+.mainContent{
+    padding-top: 1em;
+}
+.paddingtop1{
+    padding-top: 1em;
+}
