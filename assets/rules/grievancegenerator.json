@@ -1,0 +1,164 @@
+[
+    {
+        "controltype": "dropdown",
+        "title":"Language",
+        "controlid": "ddllanguage",
+        "required":"true",
+        "errormsg": "Please Enter Language.",
+        "controldatatype": "text",
+        "controldata": {"select": "--- Select --- ", "TL":"Tamil", "EN" : "English"}
+    },
+    {
+        "display":"1",
+        "controltype": "dropdown",
+        "title":"Grievance",
+        "controlid": "ddlgrievance",
+        "required":"true",
+        "errormsg": "Please Select the type of your Grievance.",
+        "filecontentid":"grievanceid",
+        "filecontentname":"grievancename",
+        "controldatatype": "file",
+        "controldata": "data/grievancelists.json"
+    },
+    {
+        "controltype": "input",
+        "title":"My Name",
+        "controlid": "txtfromname",
+        "required":"true",
+        "errormsg": "Please Enter Name."
+    },
+    {
+        "controltype": "input",
+        "title":"My House Number",
+        "controlid": "txtfromhousenumber",
+        "required":"true",
+        "errormsg": "Please Enter Your House Number."
+    },
+    {
+        "controltype": "input",
+        "title":"My House Name",
+        "controlid": "txtfromhousename",
+        "required":"true",
+        "errormsg": "Please Enter Your House Name."
+    },
+    {
+        "controltype": "input",
+        "title":"My Street Name",
+        "controlid": "txtfromstreetname",
+        "required":"true",
+        "errormsg": "Please Enter Your Street Name."
+    },
+    {
+        "controltype": "input",
+        "title":"My City",
+        "controlid": "txtfromcity",
+        "required":"true",
+        "errormsg": "Please Enter Your City."
+    },
+    {
+        "controltype": "input",
+        "title":"My Village",
+        "controlid": "txtfromvillagename",
+        "required":"true",
+        "errormsg": "Please Enter Your Village."
+    },
+    {
+        "controltype": "input",
+        "title":"My Postal Name",
+        "controlid": "txtfrompostalname",
+        "required":"true",
+        "errormsg": "Please Enter Your Postal Name."
+    },
+    {
+        "controltype": "input",
+        "title":"My District",
+        "controlid": "txtdistrictname",
+        "required":"true",
+        "errormsg": "Please Enter Your District."
+    },
+    {
+        "controltype": "input",
+        "title":"My State",
+        "controlid": "txtfromstatename",
+        "required":"true",
+        "errormsg": "Please Enter Your State."
+    },
+    {
+        "controltype": "input",
+        "title":"My Pincode",
+        "controlid": "txtfrompostalcode",
+        "required":"true",
+        "errormsg": "Please Enter Your Pincode."
+    },
+    {
+        "controltype": "input",
+        "title":"Mobile Number",
+        "controlid": "txtmobilenumber",
+        "required":"true",
+        "errormsg": "Please Enter Your Mobile Number."
+    },
+    {
+        "controltype": "input",
+        "title":"Email Address",
+        "controlid": "txtemailaddress",
+        "required":"false",
+        "errormsg": "Please Enter Your Email Address."
+    },
+    {
+        "controltype": "dropdown",
+        "title":"State",
+        "controlid": "ddlstate",
+        "required":"true",
+        "errormsg": "Please Select State.",
+        "parent" : "ddldistrict",
+        "controldatatype": "file",
+        "filecontentid":"stateid",
+        "filecontentname":"statename",
+        "controldata":  "data/states.json"
+    },
+    {
+        "controltype": "dropdown",
+        "title":"District",
+        "controlid": "ddldistrict",
+        "required":"true",
+        "errormsg": "Please Select District.",
+        "parent" : "ddlstate",
+        "controldatatype": "text",
+        "controldata": {"select": "--- Select --- "}
+    },
+    {
+        "controltype": "dropdown",
+        "title":"Taluk",
+        "controlid": "ddltaluk",
+        "required":"true",
+        "errormsg": "Please Select Taluk.",
+        "parent" : "ddlvillage",
+        "controldatatype": "text",
+        "controldata": {"select": "--- Select --- "}
+    },
+    {
+        "controltype": "dropdown",
+        "title":"Village",
+        "controlid": "ddlvillage",
+        "required":"true",
+        "errormsg": "Please Select Village.",
+        "parent" : "ddltaluk",
+        "controldatatype": "text",
+        "controldata": {"select": "--- Select --- "}
+    },
+    {
+        "display":"0",
+        "controltype": "dropdown",
+        "title":"Office",
+        "controlid": "ddloffice",
+        "required":"true",
+        "errormsg": "Please Select Office.",
+        "controldatatype": "text",
+        "controldata": {"select": "--- Select --- "}
+    },
+    {
+        "controltype": "button",
+        "title":"GENERATE",
+        "controlid": "generate"
+    }
+]
