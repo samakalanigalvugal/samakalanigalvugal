@@ -1,0 +1,50 @@
+[
+    {
+        "pagename": "Home",
+        "pageid": "index",
+        "pagecontenttype": "text",
+        "pagecontent" : "p I have a PHP function on my site which takes a couple of seconds to complete. <a href='index.html'>Click here</a> This holds the whole page up which I don't want. Would it be possible with jquery to call this PHP function after the page has loaded and display the results in a div? Also to display an ajax loader image until the PHP function has completed? I've been looking at jQuery.post but can't seem to get it to work. Would someone be able to help?</p> Thank you."
+    },
+    {
+        "pagename": "Grievance Generator",
+        "pageid": "grievancegenerator",
+        "pagecontenttype": "file",
+        "pagecontent" : "grievancegenerator.json"
+    },
+    {
+        "pagename": "Archives",
+        "pageid": "archives",
+        "pagecontenttype": "text",
+        "pagecontent" : "This is Archives page."
+    },
+    {
+        "pagename": "Government Contacts",
+        "pageid": "governmentcontactlist",
+        "pagecontenttype": "text",
+        "pagecontent" : "This is Government Contacts page."
+    },
+    {
+        "pagename": "Judicial Decisions",
+        "pageid": "judicialdecisions",
+        "pagecontenttype": "text",
+        "pagecontent" : "This is Judicial Decisions page."
+    },
+    {
+        "pagename": "Government Decisions",
+        "pageid": "governmentdecisions",
+        "pagecontenttype": "text",
+        "pagecontent" : "This is Government Decisions page."
+    },
+    {
+        "pagename": "Contact Us",
+        "pageid": "contactus",
+        "pagecontenttype": "text",
+        "pagecontent" : "<p>Address 1</p><p>Address 1</p><p>City</p><p>Postal</p><p>Taluk</p><p>District</p><p>State - 000000</p><p>Phone - (+91) 00000 00000.</p><p>Email - samakalanigalvugal@gmail.com</p>"
+    },
+    {
+        "pagename": "Questionaire",
+        "pageid": "faq",
+        "pagecontenttype": "file",
+        "pagecontent" : "faq.json"
+    }
+]
