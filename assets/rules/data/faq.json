@@ -1,13 +1,15 @@
 [
     {
-        "faqid" : "villageoffice",
-        "faqname" : "கிராம அலுவலர்",
-        "faqcontent" : "கிராம அலுவலர்"
+        "faqid" : "tamilarvelanmai",
+        "faqname" : "தமிழர் வேளாண்மை",
+        "faqcontent" : "தமிழர் வேளாண்மை",
+        "video": "assets/rules/data/தமிழர் வேளாண்மை.mp4"
     },
     {
-        "faqid" : "panchayatoffice",
-        "faqname" : "பஞ்சாயத்து தலைவர்",
-        "faqcontent" : "கிராம அலுவலர்"
+        "faqid" : "sewing",
+        "faqname" : "நைட் பேண்ட் தைப்பது எப்படி",
+        "faqcontent" : "நைட் பேண்ட் தைப்பது எப்படி",
+        "video": "assets/rules/data/தமிழர் வேளாண்மை.mp4"
     },
     {
         "faqid" : "eboffice",
