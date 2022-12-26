@@ -74,6 +74,7 @@ body{
 }
 .middle {
   width: 50%;
+  overflow:scroll;
 }
 .row{
   width:100%;
@@ -130,6 +131,10 @@ body{
   text-align: center!important;
   padding: 1em !important;
   font-size: 0.9em;
+}
+.footer a
+{
+  color: #fff!important;
 }
 
 .border {
@@ -325,10 +330,14 @@ background-color: #227a6e;
 .container
 {
   height:50%;
-  overflow:scroll;
 }
 .faqsection
 {
   margin-top: 0.2em;
   margin-bottom: 0.2em;
+}
+video{
+  width: 100%;
+  padding: 0.4em;
+  height: 10%;
 }
