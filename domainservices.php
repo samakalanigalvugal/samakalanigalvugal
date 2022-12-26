@@ -13,7 +13,7 @@ global $contentroot, $page_rules, $defaultimage,
         $physical_output_folder, $villagesinfo;
 
 $contentroot = "assets/rules/";
-$page_rules = $contentroot ."pages.json";
+$page_rules = $contentroot ."data/pages.json";
 $defaultimage = "assets/images/default.png";
 
 $page_data = json_decode(file_get_contents($page_rules),true);
@@ -69,7 +69,11 @@ function downloadpdf()
       { 
           if($grievance_file_data[$i]['grievanceid'] == $_POST['grievanceid'] )
           {
-              $header = $grievance_file_data[$i]['header'];
+              $header = '';
+              if(isset($grievance_file_data[$i]['header']))
+              {
+                $header = $grievance_file_data[$i]['header'];
+              }
               $content_file_name = $contentroot .'data/contents/'. $_POST['language'] .  $_POST['grievanceid'] .'.txt';
               $template_file_name = $contentroot .'data/templates/'. $_POST['language'] .  $_POST['grievanceid'] .'template.html';
               
@@ -106,8 +110,6 @@ function downloadpdf()
                   $pdf_file_name =  $physical_output_folder .$output_file.'.pdf';
 
                   require('assets/libraries/fpdf.php');
-
-                  
                   $pdf = new FPDF();
                   // $pdf->PHP_SAPI = 'A';
                   $pdf->AddPage();
@@ -551,7 +553,16 @@ try {
     for($i=0; $i< count($json_data); $i++)
     { 
       $page_content .='<div class="faqsection"><div class="faqheading" id="' .$json_data[$i]['faqid'] . '">' . ($i+1) . '). '.$json_data[$i]['faqname'].'</div>'
-                    .'<div class="faqcontent" id="' .$json_data[$i]['faqid'] . 'content">' .$json_data[$i]['faqcontent'] .'</div></div>';
+                    .'<div class="faqcontent" id="' .$json_data[$i]['faqid'] . 'content">' .$json_data[$i]['faqcontent'] ;
+      if(isset($json_data[$i]['video']))
+      {echo 1;
+        $page_content .='<div>
+                          <video class="faqvideo" id="' .$json_data[$i]['faqid'] . 'video" controls>
+                            <source src="'. $json_data[$i]['video'] .'" type=video/mp4>
+                          </video>
+                        </div>';
+      }
+      $page_content .='</div></div>';
     }
     
     return $page_content;
@@ -623,7 +634,7 @@ try {
   {
     global $contentroot; 
     global $defaultimage;
-    $file_name = $contentroot ."archivelist.json";
+    $file_name = $contentroot ."data/archivelist.json";
     $json_data = json_decode(file_get_contents($file_name),true);
     $page_content ='';
     for($i=0; $i< count($json_data); $i++)
@@ -661,7 +672,7 @@ try {
   function buildGrievanceGenerator($pagename)
   { 
     global $contentroot;
-    $contentfile = 'grievancegenerator.json';
+    $contentfile = 'controls/grievancegenerator.json';
     
     $page_data = json_decode(file_get_contents($contentroot .$contentfile),true);
     $local_data = '<p class="pageinstructionheader">Provide your inputs</p>';
@@ -741,7 +752,7 @@ try {
   function buildGovenmentContactListPage()
   {
     global $contentroot, $defaultimage; 
-    $file_name = $contentroot ."governmentcontactlist.json";
+    $file_name = $contentroot ."data/governmentcontactlist.json";
     $json_data = json_decode(file_get_contents($file_name),true);
     $page_content ='';
     for($i=0; $i< count($json_data); $i++)
@@ -786,6 +797,6 @@ try {
   }
 
   function generatefooter(){
-      return '<p>Copyright &copy; 2022 samakalanigalvugal.com. All rights reserved. Design by <a href="www.samakalanigalvugal.com/">Samakala Nigalvugal</a>.</p>';
+      return '<p>Copyright &copy; 2022 Samakala Nigalvugal. All rights reserved. Design by <a href="www.samakalanigalvugal.com/">Samakala Nigalvugal</a>.</p>';
   }
 ?>
