@@ -1,3 +1,19 @@
+function printDiv() {
+    var divContents = document.getElementById("container").innerHTML;
+    var windowUrl = ' ';
+    //set print document name for gridview
+    var uniqueName = new Date();
+    var windowName = 'Print_' + uniqueName.getTime();
+    var prtWindow = window.open(windowUrl, windowName, 'left=0,top=0,right=0,bottom=0,width=screen.width,height=screen.height,margin=0,0,0,0');
+    //var a = window.open('', '', 'height=1000, width=1000');
+    //a.document.write('<html>');
+    //a.document.write('<body > <h1>Div contents are <br>');
+    prtWindow.document.write(divContents);
+    //a.document.write('</body></html>');
+    prtWindow.document.close();
+    prtWindow.print();
+}
+
 $(document).ready(function(){
     var folderName = './docs/';
     var fileName = '';
@@ -11,11 +27,55 @@ $(document).ready(function(){
     var CONSTCONTACTUS = 'contactus';
     var CONSTGOVERNMENTDECISIONS= 'governmentdecisions';
     var CONSTJUDICIALDECISIONS = 'judicialdecisions';
+/*var winRef;
+    var divContents = document.getElementById("container").innerHTML;
+    //var a = window.open();
+      //      a.document.write(divContents);
+       //     a.document.close();
+      //      a.print();
+      try {
+        if (!winRef || winRef.closed) {
+            winRef = window.open('', '', 'left=0,top=0,width=300,height=400,toolbar=0,scrollbars=0,status=0,dir=ltr');
+        } else {
+            winRef.focus();
+        }
+    
+        winRef.document.open();
+        winRef.document.write(divContents);
+    
+    
+        winRef.document.close();
+        winRef.focus();
+        winRef.print();
+    } catch { }
+    finally {
+        if (winRef && !winRef.closed) winRef.close();
+    }
+    
+    /*function encode(r) {
+        return r.replace(/[\x26\x0A\x3c\x3e\x22\x27]/g, function(r) {
+          return "&#" + r.charCodeAt(0) + ";";
+        });
+      }
+
+    var doc = new jsPDF();
+    var specialElementHandlers = {
+        '#print-btn': function (element, renderer) {
+            return true;
+        }
+    };
+    doc.fromHTML(encode('<h1>தண்ணீர் இல்லை</h1>'), 15, 15, {
+        'width': 170,
+            'elementHandlers': specialElementHandlers
+    });
+    doc.save('pdf-version.pdf');*/
 
     $( ".scrollcontents" ).scroll();
     /*$(document).on("click", '.menuitem', function() {
         alert($(this).text());
     });*/
+
+
     $(document).on("click", '#generate', function() {
         var printabledata = validate($(this).attr('pageid'));
         if(printabledata != ''){
@@ -27,6 +87,9 @@ $(document).ready(function(){
 
     $( ".faqheading" ).click(function() {
         $(".faqcontent").hide( "slow" );
+        //var vid = document.getElementByClass("faqvideo"); 
+        //vid.pause(); 
+        $('video').trigger('pause');
         var currentheadingid = $(this).attr('id')
         $("#" + currentheadingid + "content").show( "slow");
     });
@@ -59,7 +122,7 @@ $(document).ready(function(){
         var parent = $(this).attr('parentcontrol');
         $("." + parent).css("display","none");
     });
-    
+
     function generatehtml(printabledata){
         $.ajax
             ({
@@ -88,33 +151,56 @@ $(document).ready(function(){
                         taluk: $("#ddltaluk").val(), 
                         village :$("#ddlvillage").val()
                     },
-                success: function(returl)
+                success: function(retdata)
                 {
                     $('.popup').css("display", "block");
                     $('.popuplink').css("display", "none");
                     $('.popuperrormessage').css("display", "none");
-                    if(returl.length > 0 && returl.substr(0, 4) === 'http')
+                    
+                    if(retdata.length > 0 && retdata.substr(0, 15) === '<!DOCTYPE html>')
                     {
-                        $('.popuplink').attr("href", returl);
-                        $('.popuplink').text('Download your Grievance!.');
+                        $("#container").html(retdata);
+                       /* var divContents = document.getElementById("container").innerHTML;
+                    var a = window.open('', '', 'height=500, width=500');
+                            a.document.write(divContents);
+                            a.document.close();
+                            a.print();*/
+
+                        //var headers =  $(".container").html();
+                       // var w = window.open();
+                       // document.write(retdata);
+                       //$(".container").print();
+
+
+                        //$('.popuplink').attr("href", returl);
                         $('.popuplink').css("display", "block");
                     }
                     else
                     {
+                        $('.popup').css("display", "block");
                         $('.popuperrormessage').css("display", "block");
                     }
                 },
                 error:function(retudata)
                 {
+                    $('.popup').css("display", "block");
                     $('.popuperrormessage').css("display", "block");
                 }
             });
     }
 
     $("select").change (function(){ 
+        
+        if($(this).val() == "select") return;
+
         var ctrlid = $(this).attr('id');
         var shouldprocessdomaincall = false;
         switch(ctrlid) { 
+            case 'ddllanguage':
+            {
+                shouldprocessdomaincall = true;
+                $("#ddlgrievance").find("option").remove(); 
+            }
             case 'ddlstate':
             {
                 shouldprocessdomaincall = true;
@@ -157,13 +243,19 @@ $(document).ready(function(){
                 type: "POST",
                 url: "domainservices.php",
                 data: { datarequestedfrom : $(this).attr('pagename'), datarequestedby: ctrlid, 
+                                            language: $("#ddllanguage").val(), 
                                             state: $("#ddlstate").val(), 
                                             district: $("#ddldistrict").val(), 
                                             taluk: $("#ddltaluk").val(), 
                                             village :$("#ddlvillage").val() },
                 success: function(retdata)
                 {
-                    switch(ctrlid) { 
+                    switch(ctrlid) {  
+                        case 'ddllanguage':
+                        {
+                            $("#ddlgrievance").append(retdata);
+                            break;
+                        }
                         case 'ddlstate':
                         {
                             $("#ddldistrict").append(retdata);

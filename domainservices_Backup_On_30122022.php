@@ -1,7 +1,5 @@
 <?php
-if( empty(session_id()) && !headers_sent()){
-  session_start();
-}
+session_start();
       
 /*use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;*/
@@ -125,15 +123,15 @@ function downloadpdf()
                       } 
                   }
 
-                  $template_file_name = $contentroot .'templates/' .'pettition.html';
+                  $template_file_name = $contentroot .'data/templates/' .'pettition.html';
                   $page = file_get_contents($template_file_name);
                   
-                  $fromaddress = $_POST['fromname'].',<br>' .$_POST['fromhousenumber'] .', ' .$_POST['fromhousename'].',<br>' ;
+                  $fromaddress .= $_POST['fromname'].',<br>' .$_POST['fromhousenumber'] .', ' .$_POST['fromhousename'].',<br>' ;
                   $fromaddress .= $_POST['fromcity'] .', ' .$_POST['fromvillagename'].',<br>' ;
-                  $fromaddress .= $_POST['frompostalname'] .', ' .$_POST['districtname'].',<br>' ;
+                  $fromaddress .= $_POST['frompostalname'] .', ' .$_POST['fromdistrictname'].',<br>' ;
                   $fromaddress .= $_POST['fromstatename'] .' - ' .$_POST['frompostalcode'].',<br><br>' ;
                   
-                  $toaddress = $toname .', <br>' .$streetno.',<br>' .', ' .$streetname.',<br>' ;
+                  $toaddress .= $toname .', <br>' .$streetno.',<br>' .', ' .$streetname.',<br>' ;
                   $toaddress .= $city .', ' .$postal.',<br>' ;
                   $toaddress .= $district .', '. $postalcode .' - ' .$postalcode.',<br><br>' ;
                   $page = str_replace('{title}', $header, $page);
@@ -159,12 +157,160 @@ function downloadpdf()
                   $page = str_replace('{ippadikkuheader}', $ippadikkuheader, $page);
                   $page = str_replace('{ippadikkuname}', $_POST['fromname'], $page);
 
+                  echo $template_file_name;
+                    $page = file_get_contents($template_file_name);
+                    /*$page = str_replace('{fromaddresscontent}', $fromaddresscontent, $page);
+                    $page = str_replace('{toaddresscontent}', $toaddresscontent, $page);
+                    $page = str_replace('{subjectcontent}', '$subjectcontent', $page);
+                    $page = str_replace('{maincontent}', '$maincontent', $page);
+                    $page = str_replace('{placecontent}', '$placecontent', $page);
+                    $page = str_replace('{datecontent}', '$sitename', $page);
+                    $page = str_replace('{Site_Name}', '$sitename', $page);
+                    $page = str_replace('{Site_Name}', '$sitename', $page);
+                    $page = str_replace('{Site_Name}', '$sitename', $page);
+
+
+                  if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')   
+                      $url = "https://";   
+                  else  
+                      $url = "http://";  
+                  if($grievance_contents_file_name == '')
+                  {
+                    $grievance_contents = 'No contents found.';
+                  }
+                  else{
+                    $grievance_contents = file_get_contents($contentroot .$grievance_contents_file_name);
+                  }
+                  
+                  // Append the host(domain name, ip) to the URL.   
                   $output_file = $_POST['grievanceid'] .'_' .$_POST['mobilenumber'] . '_' . date("Ymdhis") ;
                   $url.= $_SERVER['HTTP_HOST'] .dirname($_SERVER['PHP_SELF']) .'/'."outputdocs/" .$output_file;
-                  $pdf_file_name =  $physical_output_folder .$output_file.'.html';
+                  $pdf_file_name =  $physical_output_folder .$output_file.'.pdf';
+                 
+                  header('Content-type: application/pdf; charset=UTF-8') ;
+                  require('assets/libraries/FPDF-master/fpdf.php');
 
-                  //file_put_contents($pdf_file_name, $page);
-                  echo $page;
+                  require('assets/libraries/FPDF-master/makefont/makefont.php');
+                  MakeFont('assets/libraries/FPDF-master/font/Bamini_Plain.ttf','cp1252');
+                  
+                  $pdf = new FPDF();
+                  
+                  // $pdf->PHP_SAPI = 'A';
+                  $pdf->AddPage();
+                  $pdf->AddFont($fontfamily, null, $fontfamily_filename);
+                  $pdf->SetFont($fontfamily);
+                  $pdf->SetMargins(20,20,20);
+                  //$pdf->SetLeftMargin(20);
+                  //$pdf->SetRightMargin(80);
+
+                  //header 
+                  $pdf->Ln(8);
+                  $pdf->Write(5, $header);
+                  $pdf->Cell(null,null,$header,0,0,'C');
+                  $pdf->Ln(10);
+                  
+                  //fromheading 
+                  $pdf->SetX(20);
+                  $pdf->Cell(null,null,$fromheader,0,0);
+                  $pdf->Ln(8);
+
+                  //sender name
+                  $pdf->SetX(30);
+                  $pdf->Cell(null,null,$_POST['fromname'],0,0);
+                  $pdf->Ln(6);
+
+                  //sender house number and street name
+                  $pdf->SetX(30);$pdf->Cell(null,null,$_POST['fromhousenumber'] . ', ' .$_POST['fromhousename'],0,0);
+                  $pdf->Ln(6);
+
+                  //sender village postal
+                  $pdf->SetX(30);$pdf->Cell(null,null,$_POST['fromvillagename'] . ', ' .$_POST['frompostalname'],0,0);
+                  $pdf->Ln(6);
+
+                  //taluk district state and pincode
+                  $pdf->SetX(30);$pdf->Cell(null,null,$_POST['districtname'] .', ' .$_POST['fromstatename'] .', ' .$_POST['frompostalcode'] .'.',0,0);
+                  $pdf->Ln(6);
+
+                  //sender phone number
+                  $pdf->SetX(30);$pdf->Cell(null,null,'Phone : '. $_POST['mobilenumber'],0,0);
+                  $pdf->Ln(8);
+              
+                  //to header name
+                  $pdf->SetX(20);
+                  $pdf->Cell(null,null,$toheader);
+                  //$pdf->Cell(60,20,$toheader,0,0);
+                  $pdf->Ln(6);
+
+                  //reciever name
+                  $pdf->SetX(30);$pdf->Cell(null,null,$toname);
+                  //$pdf->Cell(60,20,$toname,0,0);
+                  $pdf->Ln(6);
+
+                  //reciever house number and street name
+                  if(strlen($streetno) >0)
+                  {
+                    $streetname = $streetno . ', ' .$streetname;
+                  }
+
+                  $pdf->SetX(30);$pdf->Cell(null,null, $streetname . ',',0,0);
+                  $pdf->Ln(6);
+
+                  //reciever village postal
+                  $pdf->SetX(30);$pdf->Cell(null,null,$city . ', ' .$postal .',' ,0,0);
+                  $pdf->Ln(6);
+
+                  //reciever taluk district state and pincode
+                  $pdf->SetX(30);
+                  $pdf->Cell(null,null, $_POST['taluk'] . ', ' .$_POST['district']. ', ' .$_POST['state']. ', ' .$postalcode .'.',0,0);
+                  $pdf->Ln(8);
+
+                  //sir heading
+                  $pdf->SetX(20);
+                  $pdf->Cell(null,null,$iyyaheader,0,0);
+                  $pdf->Ln(8);
+
+                  //subject header & subject
+                  $pdf->SetX(30);
+                  $pdf->Cell(null,null,$subjectheader . ' : ' .$subject,0,0);
+                  $pdf->Ln(6);
+
+                  //content
+                  $pdf->SetX(20);
+                  $pdf->Write(5, $grievance_contents);
+                  //$pdf->Cell(null,null,$grievance_contents,0,0, 'J');
+                  $pdf->Ln(8);
+
+                  //place header and name
+                  $pdf->SetX(20);
+                  $pdf->Cell(null,null,$placeheader . ' : ' . $_POST['fromvillagename'],0,0);
+                  
+                  //ippadikku/yourself header
+                  $pdf->SetX(140);
+                  $pdf->Cell(null,null,$ippadikkuheader,0,0);
+                  $pdf->Ln(6);
+
+                  //date header and date
+                  $pdf->SetX(20);
+                  $pdf->Cell(null,null,$dateheader . ' : ' .date('d-m-Y'),0,0);
+                  $pdf->Ln(8);
+
+                  //ippadikku/yourself name
+                  $pdf->SetX(140);
+                  $pdf->Cell(null,null,$_POST['fromname'],0,0);
+                  $pdf->Output($pdf_file_name, 'F');
+                  //file_put_contents($pdf_file_name, $pdf_content);
+                  
+                  //sendemail($output_file, $pdf_file_name);
+                  
+                  //echo $url.'.pdf';
+
+                  /*header('Content-Type: application/pdf;charset=utf-8');
+                  header('Content-Disposition: attachment; '.$pdf_file_name);
+			header('Cache-Control: private, max-age=0, must-revalidate');
+			header('Pragma: public');*/
+
+                  //echo "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export HTML To Doc</title></head><body>
+                       // </body></html>";
                  }
           }
       }

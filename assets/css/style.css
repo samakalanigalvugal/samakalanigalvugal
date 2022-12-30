@@ -74,7 +74,6 @@ body{
 }
 .middle {
   width: 50%;
-  overflow:scroll;
 }
 .row{
   width:100%;
@@ -269,7 +268,7 @@ font-size: 50px;
 color: white;
 transform: translate(-50%,-50%);
 -ms-transform: translate(-50%,-50%);
-border: 1px solid #cbb154;
+border: 5px solid #cbb154;
 padding: 0.5em;
 background-color: #227a6e;
 }
@@ -283,7 +282,8 @@ background-color: #227a6e;
 
 .popuptext{
   text-align: center;
-  padding-top: 1em;
+  padding-top: 2em;
+  padding-bottom: 2em;
   font-size: .6em;
 }
 
@@ -298,7 +298,7 @@ background-color: #227a6e;
 {
   display: block;
   font-size: 0.4em;
-  border: 1px solid #cbb154;
+  /*border: 1px solid #cbb154;*/
   padding: 3em;
   background-color: #227a6e;
   text-align: center;
@@ -306,8 +306,11 @@ background-color: #227a6e;
 .popuperrormessageclose
 {
   float: right;
-  color: #cbb154;
+  color: #000000;
   font-weight: bold;
+  cursor: crosshair;
+  padding-bottom: .3em;
+  font-family: fangsong;
 }
 
 .faqheading

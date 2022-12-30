@@ -2,8 +2,8 @@
     {
         "pagename": "Home",
         "pageid": "index",
-        "pagecontenttype": "text",
-        "pagecontent" : "p I have a PHP function on my site which takes a couple of seconds to complete. <a href='index.html'>Click here</a> This holds the whole page up which I don't want. Would it be possible with jquery to call this PHP function after the page has loaded and display the results in a div? Also to display an ajax loader image until the PHP function has completed? I've been looking at jQuery.post but can't seem to get it to work. Would someone be able to help?</p> Thank you."
+        "pagecontenttype": "file",
+        "pagecontent" : "index.html"
     },
     {
         "pagename": "Grievance Generator",
@@ -46,5 +46,11 @@
         "pageid": "faq",
         "pagecontenttype": "file",
         "pagecontent" : "faq.json"
+    },
+    {
+        "pagename": "About Us",
+        "pageid": "aboutus",
+        "pagecontenttype": "file",
+        "pagecontent" : "aboutus.html"
     }
 ]

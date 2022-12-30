@@ -16,9 +16,7 @@
         "required":"true",
         "errormsg": "Please Select the type of your Grievance.",
         "filecontentid":"grievanceid",
-        "filecontentname":"grievancename",
-        "controldatatype": "file",
-        "controldata": "data/grievancelists.json"
+        "filecontentname":"grievancename"
     },
     {
         "controltype": "input",
